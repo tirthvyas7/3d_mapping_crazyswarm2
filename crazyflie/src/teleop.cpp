@@ -11,7 +11,7 @@
 #include <crazyflie_interfaces/srv/notify_setpoints_stop.hpp>
 #include "geometry_msgs/msg/twist.hpp"
 #include "crazyflie_interfaces/msg/full_state.hpp"
-
+#include <bits/stdc++.h> 
 
 #include <Eigen/Geometry>
 
@@ -37,12 +37,12 @@ public:
         subscription_ = this->create_subscription<sensor_msgs::msg::Joy>(
             "joy", 1, std::bind(&TeleopNode::joyChanged, this, _1));
 
-        pub_cmd_vel_legacy_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_legacy", 10);
-        pub_cmd_full_state_ = this->create_publisher<crazyflie_interfaces::msg::FullState>("cmd_full_state", 10);
+        pub_cmd_vel_legacy_ = this->create_publisher<geometry_msgs::msg::Twist>("/cf231/cmd_vel_legacy", 10);
+        pub_cmd_full_state_ = this->create_publisher<crazyflie_interfaces::msg::FullState>("/cf231/cmd_full_state", 10);
 
         this->declare_parameter("frequency", 0);
         this->get_parameter<int>("frequency", frequency_);
-        this->declare_parameter("mode", "default");
+        this->declare_parameter("mode", "cmd_rpy");
         this->get_parameter<std::string>("mode", mode_);
         this->declare_parameter("auto_yaw_rate", 0.0);
         this->get_parameter<double>("auto_yaw_rate", auto_yaw_rate_);
@@ -94,6 +94,7 @@ public:
         param_subscriber_ = std::make_shared<rclcpp::ParameterEventHandler>(this);
         cb_handle_ = param_subscriber_->add_parameter_event_callback(std::bind(&TeleopNode::on_parameter_event, this, _1));
 
+        
         if (frequency_ > 0) {
             timer_ = this->create_wall_timer(std::chrono::milliseconds(1000/frequency_), std::bind(&TeleopNode::publish, this));
         }
@@ -209,6 +210,7 @@ private:
 
     void joyChanged(const sensor_msgs::msg::Joy::SharedPtr msg)
     {
+        
         static std::vector<int> lastButtonState;
 
         auto checkButton = [&](int button) { 
@@ -259,7 +261,7 @@ private:
             return 0;
         }
         auto result = sign * msg->axes[a.axis - 1]*a.max;
-        if (fabs(result) > a.deadband) {
+        if (fabs(result) > a.deadband) {           
             return result;
         } else {
             return 0;

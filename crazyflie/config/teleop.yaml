@@ -1,7 +1,7 @@
 /teleop:
   ros__parameters:
     frequency: 100  # set to 0, to disable manual flight modes
-    mode: "none" # one of none, cmd_rpy, cmd_vel_world
+    mode: "cmd_vel_world" # one of none, cmd_rpy, cmd_vel_world
     cmd_rpy:
       roll:
         axis: 5
@@ -21,11 +21,11 @@
         deadband: 0.0
     cmd_vel_world:
       x_velocity:
-        axis: 5
+        axis: 4
         max: 0.5 # m/s
         deadband: 0.1 # m/s
       y_velocity:
-        axis: 4
+        axis: 3
         max: 0.5 # m/s
         deadband: 0.1 # m/s
       z_velocity:
@@ -37,8 +37,8 @@
         max: 0.5 # rad/s
         deadband: 0.1 # rad/s
       # workspace limits
-      x_limit: [-1.0, 1.0] # m
-      y_limit: [-1.0, 1.0] # m
+      x_limit: [-3.0, 3.0] # m
+      y_limit: [-2.0, 2.0] # m
       z_limit: [0.0, 2.5] # m
     initial_position:
       x: 0.0

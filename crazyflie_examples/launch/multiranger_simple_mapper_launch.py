@@ -16,7 +16,7 @@ def generate_launch_description():
         launch_arguments={
             'backend': 'cflib',
             'gui': 'false',
-            'teleop': 'false',
+            'teleop': 'True',
             'mocap': 'false',
             }.items())
 

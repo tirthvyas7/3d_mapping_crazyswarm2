@@ -112,6 +112,7 @@ install(PROGRAMS
   scripts/aideck_streamer.py
   scripts/gui.py
   scripts/flash.py
+  scripts/3d_mapper.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

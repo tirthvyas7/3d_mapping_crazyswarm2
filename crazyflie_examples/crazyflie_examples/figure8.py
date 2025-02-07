@@ -36,7 +36,7 @@ def main():
         # allcfs.startTrajectory(0, timescale=TIMESCALE, reverse=True)
         # timeHelper.sleep(traj1.duration * TIMESCALE + 2.0)
 
-        allcfs.land(targetHeight=0.06, duration=2.0)
+        allcfs.land(targetHeight=0.1, duration=2.0)
         timeHelper.sleep(3.0)
 
     # disable logging

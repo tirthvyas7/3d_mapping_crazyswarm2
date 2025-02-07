@@ -16,9 +16,11 @@ def generate_launch_description():
         launch_arguments={
             'backend': 'cflib',
             'gui': 'false',
-            'teleop': 'false',
+            'teleop': 'True',
             'mocap': 'false',
             }.items())
+
+    crazyflie_name = '/cf231'
 
     return LaunchDescription([
         crazyflie,
@@ -27,8 +29,16 @@ def generate_launch_description():
             executable='vel_mux.py',
             name='vel_mux',
             output='screen',
-            parameters=[{'hover_height': 0.7},
+            parameters=[{'hover_height': 0.3},
                         {'incoming_twist_topic': '/cmd_vel'},
-                        {'robot_prefix': '/cf231'}]
+                        {'robot_prefix': crazyflie_name}]
+        ),
+        Node(
+            package='crazyflie',
+            executable='3d_mapper.py',
+            name='mapper_3d',
+            output='screen',
+            parameters=[
+                {'robot_prefix': crazyflie_name}]
         ),
     ])
